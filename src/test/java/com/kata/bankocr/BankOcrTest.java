@@ -1,6 +1,5 @@
 package com.kata.bankocr;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -12,7 +11,6 @@ import static org.apache.commons.lang3.StringUtils.join;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BankOcrTest {
-    @Disabled
     @Test
     void should_recognize_input_file_and_produce_number_list_file() {
         // Given
@@ -32,9 +30,6 @@ class BankOcrTest {
         new BankOcr().recognize(input, new BufferedWriter(output));
 
         // Then
-        assertThat(output.toString()).isEqualTo(join(new String[]{
-            "123456789",
-            "693576418"
-        }, "\n"));
+        assertThat(output.toString()).isEqualTo("123456789\n693576418\n");
     }
 }
