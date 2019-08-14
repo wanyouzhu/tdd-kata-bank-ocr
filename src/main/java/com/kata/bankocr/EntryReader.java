@@ -15,6 +15,7 @@ public class EntryReader {
 
     public List<Entry> readAll() {
         List<String> lines = input.lines().collect(Collectors.toList());
+        if (lines.size() % LINES_PER_ENTRY != 0) throw new MalformedInputException();
         int numberOfEntries = lines.size() / LINES_PER_ENTRY;
         return IntStream.range(0, numberOfEntries).mapToObj(i -> extractEntry(lines, i)).collect(Collectors.toList());
     }
