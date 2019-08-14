@@ -10,12 +10,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 class EntryTest {
     @Test
     void should_equal_to_others_with_same_content() {
-        List<String> content = Arrays.asList(
+        assertThat(new Entry(entryContentOne())).isEqualTo(new Entry(entryContentOne()));
+    }
+
+    @Test
+    void should_not_equal_to_others_with_different_contents() {
+        assertThat(new Entry(entryContentOne())).isNotEqualTo(new Entry(entryContentTwo()));
+    }
+
+    private List<String> entryContentOne() {
+        return Arrays.asList(
             "    _  _     _  _  _  _  _ ",
             "  | _| _||_||_ |_   ||_||_|",
             "  ||_  _|  | _||_|  ||_| _|",
             "                           "
         );
-        assertThat(new Entry(content)).isEqualTo(new Entry(content));
+    }
+
+    private List<String> entryContentTwo() {
+        return Arrays.asList(
+            " _  _  _  _  _  _        _ ",
+            "|_ |_| _||_   ||_ |_|  ||_|",
+            "|_| _| _| _|  ||_|  |  ||_|",
+            "                           "
+        );
     }
 }
