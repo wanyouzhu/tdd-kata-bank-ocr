@@ -30,6 +30,7 @@ public class Unit {
         if (content.equals(Digits.FOUR)) return "4";
         if (content.equals(Digits.FIVE)) return "5";
         if (content.equals(Digits.SIX)) return "6";
+        if (content.equals(Digits.SEVEN)) return "7";
         return "0";
     }
 }

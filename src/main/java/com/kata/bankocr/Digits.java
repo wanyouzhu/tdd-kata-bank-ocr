@@ -54,6 +54,13 @@ public class Digits {
         "   "
     );
 
+    public static final List<String> SEVEN = defineDigit(
+        " _ ",
+        "  |",
+        "  |",
+        "   "
+    );
+
     private static List<String> defineDigit(String... lines) {
         return Collections.unmodifiableList(Arrays.asList(lines));
     }
