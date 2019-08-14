@@ -22,4 +22,8 @@ public class Unit {
     public int hashCode() {
         return Objects.hash(content);
     }
+
+    public String resolve() {
+        return "0";
+    }
 }

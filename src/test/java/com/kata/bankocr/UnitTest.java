@@ -13,6 +13,20 @@ class UnitTest {
         assertThat(new Unit(two())).isEqualTo(new Unit(two()));
     }
 
+    @Test
+    void should_resolve_zero_correctly() {
+        assertThat(new Unit(zero()).resolve()).isEqualTo("0");
+    }
+
+    private List<String> zero() {
+        return Arrays.asList(
+            " _ ",
+            "| |",
+            "|_|",
+            "   "
+        );
+    }
+
     private List<String> two() {
         return Arrays.asList(
             " _ ",
