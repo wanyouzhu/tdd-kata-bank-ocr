@@ -25,4 +25,11 @@ public class Digits {
         "|_ ",
         "   "
     ));
+
+    public static final List<String> THREE = Collections.unmodifiableList(Arrays.asList(
+        " _ ",
+        " _|",
+        " _|",
+        "   "
+    ));
 }

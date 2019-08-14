@@ -26,6 +26,7 @@ public class Unit {
     public String resolve() {
         if (content.equals(Digits.ONE)) return "1";
         if (content.equals(Digits.TWO)) return "2";
+        if (content.equals(Digits.THREE)) return "3";
         return "0";
     }
 }
