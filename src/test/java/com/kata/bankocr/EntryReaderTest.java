@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class EntryReaderTest {
 
     @Test
-    void should_read_entries_from_input() {
+    void should_read_correct_number_of_entries_from_input() {
         EntryReader entryReader = new EntryReader(input());
         assertThat(entryReader.readAll().size()).isEqualTo(2);
     }
