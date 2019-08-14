@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.join;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,6 +15,14 @@ class EntryReaderTest {
     void should_read_correct_number_of_entries_from_input() {
         EntryReader entryReader = new EntryReader(input());
         assertThat(entryReader.readAll().size()).isEqualTo(2);
+    }
+
+    @Test
+    void should_read_correct_entries_from_input() {
+        EntryReader entryReader = new EntryReader(input());
+        List<Entry> entries = entryReader.readAll();
+        assertThat(entries.get(0)).isEqualTo(new Entry(entryContentOne()));
+        assertThat(entries.get(1)).isEqualTo(new Entry(entryContentTwo()));
     }
 
     private BufferedReader input() {
@@ -26,5 +36,23 @@ class EntryReaderTest {
             "|_| _| _| _|  ||_|  |  ||_|",
             "                           ",
         }, "\n")));
+    }
+
+    private List<String> entryContentOne() {
+        return Arrays.asList(
+            "    _  _     _  _  _  _  _ ",
+            "  | _| _||_||_ |_   ||_||_|",
+            "  ||_  _|  | _||_|  ||_| _|",
+            "                           "
+        );
+    }
+
+    private List<String> entryContentTwo() {
+        return Arrays.asList(
+            " _  _  _  _  _  _        _ ",
+            "|_ |_| _||_   ||_ |_|  ||_|",
+            "|_| _| _| _|  ||_|  |  ||_|",
+            "                           "
+        );
     }
 }
