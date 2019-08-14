@@ -19,4 +19,9 @@ class UnitTest {
     void should_resolve_one_correctly() {
         assertThat(new Unit(Digits.ONE).resolve()).isEqualTo("1");
     }
+
+    @Test
+    void should_resolve_two_correctly() {
+        assertThat(new Unit(Digits.TWO).resolve()).isEqualTo("2");
+    }
 }
