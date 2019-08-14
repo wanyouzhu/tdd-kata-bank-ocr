@@ -33,7 +33,7 @@ class BankOcrTest {
 
         // Then
         assertThat(output.toString()).isEqualTo(join(new String[]{
-            "123456890",
+            "123456789",
             "693576418"
         }, "\n"));
     }
