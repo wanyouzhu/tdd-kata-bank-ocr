@@ -29,4 +29,9 @@ class UnitTest {
     void should_resolve_three_correctly() {
         assertThat(new Unit(Digits.THREE).resolve()).isEqualTo("3");
     }
+
+    @Test
+    void should_resolve_four_correctly() {
+        assertThat(new Unit(Digits.FOUR).resolve()).isEqualTo("4");
+    }
 }

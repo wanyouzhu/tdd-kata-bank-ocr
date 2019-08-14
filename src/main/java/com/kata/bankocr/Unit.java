@@ -27,6 +27,7 @@ public class Unit {
         if (content.equals(Digits.ONE)) return "1";
         if (content.equals(Digits.TWO)) return "2";
         if (content.equals(Digits.THREE)) return "3";
+        if (content.equals(Digits.FOUR)) return "4";
         return "0";
     }
 }
