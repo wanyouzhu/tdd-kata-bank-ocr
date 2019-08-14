@@ -49,4 +49,9 @@ class UnitTest {
     void should_resolve_seven_correctly() {
         assertThat(new Unit(Digits.SEVEN).resolve()).isEqualTo("7");
     }
+
+    @Test
+    void should_resolve_eight_correctly() {
+        assertThat(new Unit(Digits.EIGHT).resolve()).isEqualTo("8");
+    }
 }
