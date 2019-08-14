@@ -39,4 +39,9 @@ class UnitTest {
     void should_resolve_five_correctly() {
         assertThat(new Unit(Digits.FIVE).resolve()).isEqualTo("5");
     }
+
+    @Test
+    void should_resolve_six_correctly() {
+        assertThat(new Unit(Digits.SIX).resolve()).isEqualTo("6");
+    }
 }

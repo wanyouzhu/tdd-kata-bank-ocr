@@ -47,6 +47,13 @@ public class Digits {
         "   "
     );
 
+    public static final List<String> SIX = defineDigit(
+        " _ ",
+        "|_ ",
+        "|_|",
+        "   "
+    );
+
     private static List<String> defineDigit(String... lines) {
         return Collections.unmodifiableList(Arrays.asList(lines));
     }

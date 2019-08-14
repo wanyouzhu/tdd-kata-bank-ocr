@@ -29,6 +29,7 @@ public class Unit {
         if (content.equals(Digits.THREE)) return "3";
         if (content.equals(Digits.FOUR)) return "4";
         if (content.equals(Digits.FIVE)) return "5";
+        if (content.equals(Digits.SIX)) return "6";
         return "0";
     }
 }
