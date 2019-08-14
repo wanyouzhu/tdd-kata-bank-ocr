@@ -24,6 +24,7 @@ public class Unit {
     }
 
     public String resolve() {
+        if (content.equals(Digits.ONE)) return "1";
         return "0";
     }
 }

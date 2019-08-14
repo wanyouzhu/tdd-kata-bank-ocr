@@ -12,6 +12,13 @@ public class Digits {
         "   "
     ));
 
+    public static final List<String> ONE = Collections.unmodifiableList(Arrays.asList(
+        "   ",
+        "  |",
+        "  |",
+        "   "
+    ));
+
     public static final List<String> TWO = Collections.unmodifiableList(Arrays.asList(
         " _ ",
         " _|",

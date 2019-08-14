@@ -14,4 +14,9 @@ class UnitTest {
     void should_resolve_zero_correctly() {
         assertThat(new Unit(Digits.ZERO).resolve()).isEqualTo("0");
     }
+
+    @Test
+    void should_resolve_one_correctly() {
+        assertThat(new Unit(Digits.ONE).resolve()).isEqualTo("1");
+    }
 }
