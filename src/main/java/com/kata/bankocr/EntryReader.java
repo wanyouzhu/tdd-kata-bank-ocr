@@ -2,8 +2,9 @@ package com.kata.bankocr;
 
 import java.io.BufferedReader;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
 
 public class EntryReader {
     private static final int LINES_PER_ENTRY = 4;
@@ -14,10 +15,25 @@ public class EntryReader {
     }
 
     public List<Entry> readAll() {
-        List<String> lines = input.lines().collect(Collectors.toList());
+        List<String> lines = readAllLines();
+        ensureInputIsCorrect(lines);
+        return convertIntoEntries(lines);
+    }
+
+    private List<Entry> convertIntoEntries(List<String> lines) {
+        return IntStream.range(0, getNumberOfEntries(lines)).mapToObj(i -> extractEntry(lines, i)).collect(toList());
+    }
+
+    private List<String> readAllLines() {
+        return input.lines().collect(toList());
+    }
+
+    private void ensureInputIsCorrect(List<String> lines) {
         if (lines.size() % LINES_PER_ENTRY != 0) throw new MalformedInputException();
-        int numberOfEntries = lines.size() / LINES_PER_ENTRY;
-        return IntStream.range(0, numberOfEntries).mapToObj(i -> extractEntry(lines, i)).collect(Collectors.toList());
+    }
+
+    private int getNumberOfEntries(List<String> lines) {
+        return lines.size() / LINES_PER_ENTRY;
     }
 
     private Entry extractEntry(List<String> lines, int index) {
