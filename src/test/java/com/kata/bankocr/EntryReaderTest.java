@@ -12,12 +12,11 @@ class EntryReaderTest {
 
     @Test
     void should_read_entries_from_input() {
-        BufferedReader input = correctInput();
-        EntryReader entryReader = new EntryReader(input);
+        EntryReader entryReader = new EntryReader(input());
         assertThat(entryReader.readAll().size()).isEqualTo(2);
     }
 
-    private BufferedReader correctInput() {
+    private BufferedReader input() {
         return new BufferedReader(new StringReader(join(new String[]{
             "    _  _     _  _  _  _  _ ",
             "  | _| _||_||_ |_   ||_||_|",
