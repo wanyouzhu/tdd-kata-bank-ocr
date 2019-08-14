@@ -10,9 +10,17 @@ import static org.apache.commons.lang3.StringUtils.join;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class EntryReaderTest {
+
     @Test
     void should_read_entries_from_input() {
-        BufferedReader input = new BufferedReader(new StringReader(join(new String[]{
+        BufferedReader input = correctInput();
+        EntryReader entryReader = new EntryReader(input);
+        List<Entry> entries = entryReader.readAll();
+        assertThat(entries.size()).isEqualTo(2);
+    }
+
+    private BufferedReader correctInput() {
+        return new BufferedReader(new StringReader(join(new String[]{
             "    _  _     _  _  _  _  _ ",
             "  | _| _||_||_ |_   ||_||_|",
             "  ||_  _|  | _||_|  ||_| _|",
@@ -22,8 +30,5 @@ public class EntryReaderTest {
             "|_| _| _| _|  ||_|  |  ||_|",
             "                           ",
         }, "\n")));
-        EntryReader entryReader = new EntryReader(input);
-        List<Entry> entries = entryReader.readAll();
-        assertThat(entries.size()).isEqualTo(2);
     }
 }
