@@ -8,8 +8,8 @@ This is a TDD exercise project for coding kata Bank OCR, you can find this kata 
   * 8 lines -> 2 entries
   * Total number of lines is not times of 4 -> MalformedInputFileException 
 * Separate entry into units
-  * 86 -> [8, 6]
-  * error -> MalformedEntryException
+  * 867965245 -> [8, 6, 7, 9, 6, 5, 2, 4, 5]
+  * Not 27 characters per line -> MalformedEntryException
 * Parse numbers from units
   * 0 -> 0
   * 1 -> 1
