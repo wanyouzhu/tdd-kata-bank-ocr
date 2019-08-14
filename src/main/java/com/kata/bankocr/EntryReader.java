@@ -1,6 +1,7 @@
 package com.kata.bankocr;
 
 import java.io.BufferedReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,6 +13,6 @@ public class EntryReader {
     }
 
     public List<Entry> readAll() {
-        return Arrays.asList(new Entry(), new Entry());
+        return Arrays.asList(new Entry(new ArrayList<>()), new Entry(new ArrayList<>()));
     }
 }

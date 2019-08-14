@@ -9,7 +9,6 @@ import static org.apache.commons.lang3.StringUtils.join;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EntryReaderTest {
-
     @Test
     void should_read_correct_number_of_entries_from_input() {
         EntryReader entryReader = new EntryReader(input());
@@ -28,5 +27,4 @@ class EntryReaderTest {
             "                           ",
         }, "\n")));
     }
-
 }
