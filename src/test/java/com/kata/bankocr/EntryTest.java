@@ -18,6 +18,11 @@ class EntryTest {
         assertThat(new Entry(entryContentOne())).isNotEqualTo(new Entry(entryContentTwo()));
     }
 
+    @Test
+    void should_resolve_content_correctly() {
+        assertThat(new Entry(entryContentOne()).resolve()).isEqualTo("123456789");
+    }
+
     private List<String> entryContentOne() {
         return Arrays.asList(
             "    _  _     _  _  _  _  _ ",

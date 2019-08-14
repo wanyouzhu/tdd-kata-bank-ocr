@@ -36,7 +36,7 @@ public class Digits {
     public static final List<String> FOUR = defineDigit(
         "   ",
         "|_|",
-        "  |",
+        "  |",
         "   "
     );
 
