@@ -21,8 +21,8 @@ class EntryReaderTest {
     void should_read_correct_entries_from_input() {
         EntryReader entryReader = new EntryReader(input());
         List<Entry> entries = entryReader.readAll();
-        assertThat(entries.get(0)).isEqualTo(new Entry(entryContentOne()));
-        assertThat(entries.get(1)).isEqualTo(new Entry(entryContentTwo()));
+        assertThat(entries.get(0)).isEqualTo(new Entry(firstBlockOfInput()));
+        assertThat(entries.get(1)).isEqualTo(new Entry(secondBlockOfInput()));
     }
 
     private BufferedReader input() {
@@ -38,7 +38,7 @@ class EntryReaderTest {
         }, "\n")));
     }
 
-    private List<String> entryContentOne() {
+    private List<String> firstBlockOfInput() {
         return Arrays.asList(
             "    _  _     _  _  _  _  _ ",
             "  | _| _||_||_ |_   ||_||_|",
@@ -47,7 +47,7 @@ class EntryReaderTest {
         );
     }
 
-    private List<String> entryContentTwo() {
+    private List<String> secondBlockOfInput() {
         return Arrays.asList(
             " _  _  _  _  _  _        _ ",
             "|_ |_| _||_   ||_ |_|  ||_|",
