@@ -8,6 +8,7 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 public class Entry {
+    private static final int NUMBER_OF_UNITS_PER_ENTRY = 9;
     private static final int CHARS_PER_UNIT_LINE = 3;
     private final String result;
 
@@ -17,16 +18,16 @@ public class Entry {
     }
 
     private void checkContent(List<String> content) {
-        if (!content.stream().allMatch(x -> x.length() == CHARS_PER_UNIT_LINE * 9)) {
+        if (!content.stream().allMatch(x -> x.length() == CHARS_PER_UNIT_LINE * NUMBER_OF_UNITS_PER_ENTRY)) {
             throw new MalformedEntryException();
         }
     }
 
     private String recognize(List<String> content) {
-        return IntStream.range(0, 9).mapToObj(unitIndex -> createUnit(unitIndex, content)).map(Unit::result).collect(joining());
+        return IntStream.range(0, NUMBER_OF_UNITS_PER_ENTRY).mapToObj(i -> extractUnit(i, content)).map(Unit::result).collect(joining());
     }
 
-    private Unit createUnit(int unitIndex, List<String> content) {
+    private Unit extractUnit(int unitIndex, List<String> content) {
         return new Unit(content.stream().map(x -> extractUnitLine(unitIndex, x)).collect(toList()));
     }
 
