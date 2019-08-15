@@ -16,17 +16,17 @@ public class Entry {
     public Entry(List<String> content) {
         checkContent(content);
         this.result = recognize(content);
-        checksumResult();
+        validateChecksum();
     }
 
-    private void checksumResult() {
-        int sum = 0;
-        for (int i = 0; i < 9; ++i) {
-            sum += (9 - i) * (result.charAt(i) - '0');
-        }
-        if (sum % 11 != 0) {
+    private void validateChecksum() {
+        if (calculateChecksum() != 0) {
             result = result + " ERR";
         }
+    }
+
+    private int calculateChecksum() {
+        return IntStream.range(0, 9).map(i -> (9 - i) * (result.charAt(i) - '0')).sum() % 11;
     }
 
     private void checkContent(List<String> content) {
