@@ -22,3 +22,6 @@ This is a TDD exercise project for coding kata Bank OCR, you can find this kata 
   * 8 -> 8
   * 9 -> 9
   * other -> MalformedUnitException
+
+### User Story 2
+* Check check sum of entries
