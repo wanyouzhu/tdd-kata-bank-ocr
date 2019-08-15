@@ -19,7 +19,7 @@ public class Entry {
     }
 
     public String recognize() {
-        return IntStream.range(0, 9).mapToObj(this::createUnit).map(Unit::recognize).collect(joining());
+        return IntStream.range(0, 9).mapToObj(this::createUnit).map(Unit::result).collect(joining());
     }
 
     private Unit createUnit(int unitIndex) {
