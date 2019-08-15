@@ -10,19 +10,6 @@ public class Unit {
         this.content = content;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Unit unit = (Unit) o;
-        return content.equals(unit.content);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(content);
-    }
-
     public String recognize() {
         if (content.equals(Digits.ZERO)) return "0";
         if (content.equals(Digits.ONE)) return "1";
@@ -35,5 +22,18 @@ public class Unit {
         if (content.equals(Digits.EIGHT)) return "8";
         if (content.equals(Digits.NINE)) return "9";
         throw new MalformedUnitException();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Unit unit = (Unit) o;
+        return content.equals(unit.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(content);
     }
 }
