@@ -26,7 +26,7 @@ class EntryTest {
 
     @Test
     void should_recognize_content_correctly() {
-        assertThat(new Entry(entryContentOne()).recognize()).isEqualTo("123456789");
+        assertThat(new Entry(entryContentOne()).result()).isEqualTo("123456789");
     }
 
     private List<String> entryContentOne() {

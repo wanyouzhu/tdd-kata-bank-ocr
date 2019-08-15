@@ -8,7 +8,7 @@ import static java.util.stream.Collectors.joining;
 
 public class BankOcr {
     public void recognize(BufferedReader input, BufferedWriter output) {
-        write(output, new EntryReader(input).readAll().stream().map(Entry::recognize).collect(joining("\n")));
+        write(output, new EntryReader(input).readAll().stream().map(Entry::result).collect(joining("\n")));
         flushOutput(output);
     }
 

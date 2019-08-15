@@ -9,20 +9,20 @@ import static java.util.stream.Collectors.toList;
 
 public class Entry {
     private static final int CHARS_PER_UNIT_LINE = 3;
-    private final List<String> content;
+    private final String result;
 
     public Entry(List<String> content) {
-        this.content = content;
         if (!content.stream().allMatch(x -> x.length() == CHARS_PER_UNIT_LINE * 9)) {
             throw new MalformedEntryException();
         }
+        this.result = recognize(content);
     }
 
-    public String recognize() {
-        return IntStream.range(0, 9).mapToObj(this::createUnit).map(Unit::result).collect(joining());
+    private String recognize(List<String> content) {
+        return IntStream.range(0, 9).mapToObj(unitIndex -> createUnit(unitIndex, content)).map(Unit::result).collect(joining());
     }
 
-    private Unit createUnit(int unitIndex) {
+    private Unit createUnit(int unitIndex, List<String> content) {
         return new Unit(content.stream().map(x -> extractUnitLine(unitIndex, x)).collect(toList()));
     }
 
@@ -31,16 +31,20 @@ public class Entry {
         return entryLine.substring(unitStart, unitStart + CHARS_PER_UNIT_LINE);
     }
 
+    public String result() {
+        return result;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Entry entry = (Entry) o;
-        return content.equals(entry.content);
+        return result.equals(entry.result);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(content);
+        return Objects.hash(result);
     }
 }
