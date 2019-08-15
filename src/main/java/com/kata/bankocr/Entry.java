@@ -8,6 +8,7 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 public class Entry {
+    private static final int CHARS_PER_UNIT_LINE = 3;
     private final List<String> content;
 
     public Entry(List<String> content) {
@@ -31,7 +32,11 @@ public class Entry {
         return IntStream.range(0, 9).mapToObj(this::createUnit).map(Unit::recognize).collect(joining());
     }
 
-    private Unit createUnit(int index) {
-        return new Unit(content.stream().map(x -> x.substring(index * 3, index * 3 + 3)).collect(toList()));
+    private Unit createUnit(int unitIndex) {
+        return new Unit(content.stream().map(x -> extractUnitLine(unitIndex, x)).collect(toList()));
+    }
+
+    private String extractUnitLine(int index, String entryLine) {
+        return entryLine.substring(index * CHARS_PER_UNIT_LINE, index * CHARS_PER_UNIT_LINE + CHARS_PER_UNIT_LINE);
     }
 }
