@@ -29,3 +29,7 @@ This is a TDD exercise project for coding kata Bank OCR, you can find this kata 
 ### User Story 3
 * Convert unrecognized unit to question mark
 * Mark unrecognized entries as illegal
+
+### User Story 4
+* Generate account number candidates for error entries
+* Find out all legal candidates
