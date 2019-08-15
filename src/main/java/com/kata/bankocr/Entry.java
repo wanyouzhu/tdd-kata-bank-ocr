@@ -11,11 +11,22 @@ import static java.util.stream.Collectors.toList;
 public class Entry {
     private static final int NUMBER_OF_UNITS_PER_ENTRY = 9;
     private static final int CHARS_PER_UNIT_LINE = 3;
-    private final String result;
+    private String result;
 
     public Entry(List<String> content) {
         checkContent(content);
         this.result = recognize(content);
+        checksumResult();
+    }
+
+    private void checksumResult() {
+        int sum = 0;
+        for (int i = 0; i < 9; ++i) {
+            sum += (9 - i) * (result.charAt(i) - '0');
+        }
+        if (sum % 11 != 0) {
+            result = result + " ERR";
+        }
     }
 
     private void checkContent(List<String> content) {
