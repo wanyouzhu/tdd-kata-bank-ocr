@@ -24,6 +24,7 @@ public class Unit {
     }
 
     public String recognize() {
+        if (content.equals(Digits.ZERO)) return "0";
         if (content.equals(Digits.ONE)) return "1";
         if (content.equals(Digits.TWO)) return "2";
         if (content.equals(Digits.THREE)) return "3";
@@ -33,6 +34,6 @@ public class Unit {
         if (content.equals(Digits.SEVEN)) return "7";
         if (content.equals(Digits.EIGHT)) return "8";
         if (content.equals(Digits.NINE)) return "9";
-        return "0";
+        throw new MalformedUnitException();
     }
 }

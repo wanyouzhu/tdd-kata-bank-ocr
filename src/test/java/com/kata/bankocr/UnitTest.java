@@ -2,7 +2,9 @@ package com.kata.bankocr;
 
 import org.junit.jupiter.api.Test;
 
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UnitTest {
     @Test
@@ -58,5 +60,11 @@ class UnitTest {
     @Test
     void should_recognize_nine_correctly() {
         assertThat(new Unit(Digits.NINE).recognize()).isEqualTo("9");
+    }
+
+    @Test
+    void should_throw_malformed_unit_exception_while_content_is_malformed() {
+        Unit unit = new Unit(singletonList("invalid-unit"));
+        assertThatThrownBy(unit::recognize).isInstanceOf(MalformedUnitException.class);
     }
 }
