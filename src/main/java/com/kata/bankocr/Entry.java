@@ -18,19 +18,6 @@ public class Entry {
         }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Entry entry = (Entry) o;
-        return content.equals(entry.content);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(content);
-    }
-
     public String recognize() {
         return IntStream.range(0, 9).mapToObj(this::createUnit).map(Unit::recognize).collect(joining());
     }
@@ -42,5 +29,18 @@ public class Entry {
     private String extractUnitLine(int unitIndex, String entryLine) {
         int unitStart = unitIndex * CHARS_PER_UNIT_LINE;
         return entryLine.substring(unitStart, unitStart + CHARS_PER_UNIT_LINE);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Entry entry = (Entry) o;
+        return content.equals(entry.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(content);
     }
 }
