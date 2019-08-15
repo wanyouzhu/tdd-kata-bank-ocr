@@ -36,7 +36,8 @@ public class Entry {
         return new Unit(content.stream().map(x -> extractUnitLine(unitIndex, x)).collect(toList()));
     }
 
-    private String extractUnitLine(int index, String entryLine) {
-        return entryLine.substring(index * CHARS_PER_UNIT_LINE, index * CHARS_PER_UNIT_LINE + CHARS_PER_UNIT_LINE);
+    private String extractUnitLine(int unitIndex, String entryLine) {
+        int unitStart = unitIndex * CHARS_PER_UNIT_LINE;
+        return entryLine.substring(unitStart, unitStart + CHARS_PER_UNIT_LINE);
     }
 }
