@@ -25,3 +25,6 @@ This is a TDD exercise project for coding kata Bank OCR, you can find this kata 
 
 ### User Story 2
 * Check checksum of entries
+
+### User Story 3
+* Convert unrecognized unit to question mark.
