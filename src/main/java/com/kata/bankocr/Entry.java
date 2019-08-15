@@ -12,10 +12,14 @@ public class Entry {
     private final String result;
 
     public Entry(List<String> content) {
+        checkContent(content);
+        this.result = recognize(content);
+    }
+
+    private void checkContent(List<String> content) {
         if (!content.stream().allMatch(x -> x.length() == CHARS_PER_UNIT_LINE * 9)) {
             throw new MalformedEntryException();
         }
-        this.result = recognize(content);
     }
 
     private String recognize(List<String> content) {
