@@ -25,7 +25,7 @@ public class Unit {
         if (content.equals(Digits.SEVEN)) return "7";
         if (content.equals(Digits.EIGHT)) return "8";
         if (content.equals(Digits.NINE)) return "9";
-        throw new MalformedUnitException();
+        return "?";
     }
 
     @Override

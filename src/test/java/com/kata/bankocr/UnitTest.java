@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UnitTest {
     @Test
@@ -63,7 +62,7 @@ class UnitTest {
     }
 
     @Test
-    void should_throw_malformed_unit_exception_while_content_is_malformed() {
-        assertThatThrownBy(() -> new Unit(singletonList("invalid-unit"))).isInstanceOf(MalformedUnitException.class);
+    void should_recognize_others_as_question_mark() {
+        assertThat(new Unit(singletonList("invalid-content")).result()).isEqualTo("?");
     }
 }
