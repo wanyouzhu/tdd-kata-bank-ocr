@@ -34,6 +34,11 @@ class EntryTest {
         assertThat(new Entry(entryContentWithErrorChecksum()).result()).isEqualTo("123456780 ERR");
     }
 
+    @Test
+    void should_append_ill_while_any_unit_is_illegal() {
+        assertThat(new Entry(illegalContent()).result()).isEqualTo("69357641? ILL");
+    }
+
     private List<String> entryContentOne() {
         return Arrays.asList(
             "    _  _     _  _  _  _  _ ",
@@ -67,6 +72,15 @@ class EntryTest {
             "|_ |_| _||_   ||_ |_|  |",
             "|_| _| _| _|  ||_|  |  |",
             "                        "
+        );
+    }
+
+    private List<String> illegalContent() {
+        return Arrays.asList(
+            " _  _  _  _  _  _          ",
+            "|_ |_| _||_   ||_ |_|  | _ ",
+            "|_| _| _| _|  ||_|  |  |   ",
+            "                           "
         );
     }
 }

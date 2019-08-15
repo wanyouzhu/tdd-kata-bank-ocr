@@ -27,4 +27,5 @@ This is a TDD exercise project for coding kata Bank OCR, you can find this kata 
 * Check checksum of entries
 
 ### User Story 3
-* Convert unrecognized unit to question mark.
+* Convert unrecognized unit to question mark
+* Mark unrecognized entries as illegal

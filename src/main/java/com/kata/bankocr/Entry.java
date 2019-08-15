@@ -16,13 +16,28 @@ public class Entry {
     public Entry(List<String> content) {
         checkContent(content);
         this.result = recognize(content);
+        checkResult();
+    }
+
+    private void checkResult() {
+        validateUnits();
         validateChecksum();
     }
 
+    private void validateUnits() {
+        if (result.chars().anyMatch(x -> x == '?')) {
+            result = result + " ILL";
+        }
+    }
+
     private void validateChecksum() {
-        if (calculateChecksum() != 0) {
+        if (!hasError() && calculateChecksum() != 0) {
             result = result + " ERR";
         }
+    }
+
+    private boolean hasError() {
+        return result.length() != 9;
     }
 
     private int calculateChecksum() {
