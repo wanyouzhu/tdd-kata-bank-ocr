@@ -7,6 +7,7 @@ import java.io.BufferedWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+import static com.kata.bankocr.TestDataSet.lines;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BankOcrTest {
@@ -14,7 +15,7 @@ class BankOcrTest {
     void should_recognize_input_file_and_produce_number_list_file() {
         // Given
         StringWriter output = new StringWriter();
-        BufferedReader input = new BufferedReader(new StringReader(TestDataSet.lines(
+        BufferedReader input = new BufferedReader(new StringReader(lines(
             "    _  _     _  _  _  _  _ ",
             "  | _| _||_||_ |_   ||_||_|",
             "  ||_  _|  | _||_|  ||_| _|",
@@ -29,6 +30,9 @@ class BankOcrTest {
         new BankOcr().recognize(input, new BufferedWriter(output));
 
         // Then
-        assertThat(output.toString()).isEqualTo("123456789\n693576418\n");
+        assertThat(output.toString()).isEqualTo(lines(
+            "123456789",
+            "693576418"
+        ));
     }
 }
