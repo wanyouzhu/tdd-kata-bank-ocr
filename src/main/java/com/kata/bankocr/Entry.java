@@ -3,6 +3,7 @@ package com.kata.bankocr;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
@@ -24,7 +25,11 @@ public class Entry {
     }
 
     private String recognize(List<String> content) {
-        return IntStream.range(0, NUMBER_OF_UNITS_PER_ENTRY).mapToObj(i -> extractUnit(i, content)).map(Unit::result).collect(joining());
+        return extractUnits(content).map(Unit::result).collect(joining());
+    }
+
+    private Stream<Unit> extractUnits(List<String> content) {
+        return IntStream.range(0, NUMBER_OF_UNITS_PER_ENTRY).mapToObj(i -> extractUnit(i, content));
     }
 
     private Unit extractUnit(int unitIndex, List<String> content) {
