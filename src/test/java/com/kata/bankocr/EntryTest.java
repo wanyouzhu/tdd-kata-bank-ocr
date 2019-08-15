@@ -19,7 +19,7 @@ class EntryTest {
     }
 
     @Test
-    void should_resolve_content_correctly() {
+    void should_recognize_content_correctly() {
         assertThat(new Entry(entryContentOne()).recognize()).isEqualTo("123456789");
     }
 
