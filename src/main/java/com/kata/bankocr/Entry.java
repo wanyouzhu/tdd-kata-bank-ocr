@@ -13,6 +13,9 @@ public class Entry {
 
     public Entry(List<String> content) {
         this.content = content;
+        if (!content.stream().allMatch(x -> x.length() == CHARS_PER_UNIT_LINE * 9)) {
+            throw new MalformedEntryException();
+        }
     }
 
     @Override

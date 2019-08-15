@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class EntryTest {
     @Test
@@ -16,6 +17,11 @@ class EntryTest {
     @Test
     void should_not_equal_to_others_with_different_contents() {
         assertThat(new Entry(entryContentOne())).isNotEqualTo(new Entry(entryContentTwo()));
+    }
+
+    @Test
+    void should_throw_malformed_entry_exception_while_content_is_malformed() {
+        assertThatThrownBy(() -> new Entry(malformedContent())).isInstanceOf(MalformedEntryException.class);
     }
 
     @Test
@@ -38,6 +44,15 @@ class EntryTest {
             "|_ |_| _||_   ||_ |_|  ||_|",
             "|_| _| _| _|  ||_|  |  ||_|",
             "                           "
+        );
+    }
+
+    private List<String> malformedContent() {
+        return Arrays.asList(
+            " _  _  _  _  _  _       ",
+            "|_ |_| _||_   ||_ |_|  |",
+            "|_| _| _| _|  ||_|  |  |",
+            "                        "
         );
     }
 }
