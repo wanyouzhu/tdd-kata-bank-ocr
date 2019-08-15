@@ -23,7 +23,7 @@ public class Unit {
         return Objects.hash(content);
     }
 
-    public String resolve() {
+    public String recognize() {
         if (content.equals(Digits.ONE)) return "1";
         if (content.equals(Digits.TWO)) return "2";
         if (content.equals(Digits.THREE)) return "3";

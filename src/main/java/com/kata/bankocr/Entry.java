@@ -2,8 +2,10 @@ package com.kata.bankocr;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 public class Entry {
     private final List<String> content;
@@ -25,11 +27,11 @@ public class Entry {
         return Objects.hash(content);
     }
 
-    public String resolve() {
-        return IntStream.range(0, 9).mapToObj(this::createUnit).map(Unit::resolve).collect(Collectors.joining());
+    public String recognize() {
+        return IntStream.range(0, 9).mapToObj(this::createUnit).map(Unit::recognize).collect(joining());
     }
 
     private Unit createUnit(int index) {
-        return new Unit(content.stream().map(x -> x.substring(index * 3, index * 3 + 3)).collect(Collectors.toList()));
+        return new Unit(content.stream().map(x -> x.substring(index * 3, index * 3 + 3)).collect(toList()));
     }
 }

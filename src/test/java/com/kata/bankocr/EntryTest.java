@@ -20,7 +20,7 @@ class EntryTest {
 
     @Test
     void should_resolve_content_correctly() {
-        assertThat(new Entry(entryContentOne()).resolve()).isEqualTo("123456789");
+        assertThat(new Entry(entryContentOne()).recognize()).isEqualTo("123456789");
     }
 
     private List<String> entryContentOne() {
