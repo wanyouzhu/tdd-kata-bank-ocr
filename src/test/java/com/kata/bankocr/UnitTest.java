@@ -2,7 +2,7 @@ package com.kata.bankocr;
 
 import org.junit.jupiter.api.Test;
 
-import static java.util.Collections.singletonList;
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UnitTest {
@@ -68,6 +68,6 @@ class UnitTest {
 
     @Test
     void should_resolve_candidates_correctly() {
-        assertThat(new Unit(Digits.ONE).candidates()).isEqualTo(singletonList("7"));
+        assertThat(new Unit(Digits.EIGHT).candidates()).isEqualTo(asList("0", "6", "9"));
     }
 }
