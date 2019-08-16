@@ -31,7 +31,7 @@ class EntryTest {
 
     @Test
     void should_append_err_while_checksum_failed() {
-        assertThat(new Entry(entryContentWithErrorChecksum()).result()).isEqualTo("123456780 ERR");
+        assertThat(new Entry(entryContentWithErrorChecksum()).result()).isEqualTo("123456788 ERR");
     }
 
     @Test
@@ -60,7 +60,7 @@ class EntryTest {
     private List<String> entryContentWithErrorChecksum() {
         return Arrays.asList(
             "    _  _     _  _  _  _  _ ",
-            "  | _| _||_||_ |_   ||_|| |",
+            "  | _| _||_||_ |_   ||_||_|",
             "  ||_  _|  | _||_|  ||_||_|",
             "                           "
         );
