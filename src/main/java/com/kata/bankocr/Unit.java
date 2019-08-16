@@ -1,8 +1,10 @@
 package com.kata.bankocr;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
 
 public class Unit {
     private final String content;
@@ -45,17 +47,16 @@ public class Unit {
     }
 
     public List<String> candidates() {
-        List<String> result = new ArrayList<>();
-        for (int i = 0; i < Digits.EIGHT.length(); ++i) {
-            if (Digits.EIGHT.charAt(i) != ' ') {
-                StringBuilder builder = new StringBuilder(content);
-                builder.setCharAt(i, content.charAt(i) != Digits.EIGHT.charAt(i) ? Digits.EIGHT.charAt(i) : ' ');
-                String candidate = recognize(builder.toString());
-                if (candidate != "?") {
-                    result.add(candidate);
-                }
-            }
-        }
-        return result;
+        return sensitiveIndices().mapToObj(this::resolveCandidate).filter(x -> !x.equals("?")).collect(toList());
+    }
+
+    private IntStream sensitiveIndices() {
+        return IntStream.range(0, Digits.EIGHT.length()).filter(i -> Digits.EIGHT.charAt(i) != ' ');
+    }
+
+    private String resolveCandidate(int i) {
+        StringBuilder builder = new StringBuilder(content);
+        builder.setCharAt(i, content.charAt(i) != Digits.EIGHT.charAt(i) ? Digits.EIGHT.charAt(i) : ' ');
+        return recognize(builder.toString());
     }
 }
