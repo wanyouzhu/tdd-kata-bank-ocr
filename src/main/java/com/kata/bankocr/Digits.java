@@ -1,81 +1,79 @@
 package com.kata.bankocr;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import static org.apache.commons.lang3.StringUtils.join;
 
 public class Digits {
-    public static final List<String> ZERO = defineDigit(
+    public static final String ZERO = defineDigit(
         " _ ",
         "| |",
         "|_|",
         "   "
     );
 
-    public static final List<String> ONE = defineDigit(
+    public static final String ONE = defineDigit(
         "   ",
         "  |",
         "  |",
         "   "
     );
 
-    public static final List<String> TWO = defineDigit(
+    public static final String TWO = defineDigit(
         " _ ",
         " _|",
         "|_ ",
         "   "
     );
 
-    public static final List<String> THREE = defineDigit(
+    public static final String THREE = defineDigit(
         " _ ",
         " _|",
         " _|",
         "   "
     );
 
-    public static final List<String> FOUR = defineDigit(
+    public static final String FOUR = defineDigit(
         "   ",
         "|_|",
         "  |",
         "   "
     );
 
-    public static final List<String> FIVE = defineDigit(
+    public static final String FIVE = defineDigit(
         " _ ",
         "|_ ",
         " _|",
         "   "
     );
 
-    public static final List<String> SIX = defineDigit(
+    public static final String SIX = defineDigit(
         " _ ",
         "|_ ",
         "|_|",
         "   "
     );
 
-    public static final List<String> SEVEN = defineDigit(
+    public static final String SEVEN = defineDigit(
         " _ ",
         "  |",
         "  |",
         "   "
     );
 
-    public static final List<String> EIGHT = defineDigit(
+    public static final String EIGHT = defineDigit(
         " _ ",
         "|_|",
         "|_|",
         "   "
     );
 
-    public static final List<String> NINE = defineDigit(
+    public static final String NINE = defineDigit(
         " _ ",
         "|_|",
         " _|",
         "   "
     );
 
-    private static List<String> defineDigit(String... lines) {
-        return Collections.unmodifiableList(Arrays.asList(lines));
+    private static String defineDigit(String... lines) {
+        return join(lines);
     }
 }

@@ -6,7 +6,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
 
 public class Entry {
     private static final int NUMBER_OF_UNITS_PER_ENTRY = 9;
@@ -59,7 +58,7 @@ public class Entry {
     }
 
     private Unit extractUnit(int unitIndex, List<String> content) {
-        return new Unit(content.stream().map(x -> extractUnitLine(unitIndex, x)).collect(toList()));
+        return new Unit(content.stream().map(x -> extractUnitLine(unitIndex, x)).collect(joining()));
     }
 
     private String extractUnitLine(int unitIndex, String entryLine) {

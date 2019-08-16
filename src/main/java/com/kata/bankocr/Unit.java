@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class Unit {
-    private final List<String> content;
+    private final String content;
     private final String result;
 
-    public Unit(List<String> content) {
+    public Unit(String content) {
         this.content = content;
         this.result = recognize(content);
     }
@@ -17,7 +17,7 @@ public class Unit {
         return result;
     }
 
-    private String recognize(List<String> content) {
+    private String recognize(String content) {
         if (content.equals(Digits.ZERO)) return "0";
         if (content.equals(Digits.ONE)) return "1";
         if (content.equals(Digits.TWO)) return "2";
