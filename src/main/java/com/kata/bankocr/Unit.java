@@ -1,6 +1,6 @@
 package com.kata.bankocr;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,6 +45,17 @@ public class Unit {
     }
 
     public List<String> candidates() {
-        return Collections.singletonList("7");
+        List<String> result = new ArrayList<>();
+        for (int i = 0; i < Digits.EIGHT.length(); ++i) {
+            if (Digits.EIGHT.charAt(i) != ' ') {
+                StringBuilder builder = new StringBuilder(content);
+                builder.setCharAt(i, content.charAt(i) != Digits.EIGHT.charAt(i) ? Digits.EIGHT.charAt(i) : ' ');
+                String candidate = recognize(builder.toString());
+                if (candidate != "?") {
+                    result.add(candidate);
+                }
+            }
+        }
+        return result;
     }
 }
