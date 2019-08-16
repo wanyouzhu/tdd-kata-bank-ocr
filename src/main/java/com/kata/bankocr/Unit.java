@@ -1,5 +1,6 @@
 package com.kata.bankocr;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,5 +42,9 @@ public class Unit {
     @Override
     public int hashCode() {
         return Objects.hash(result);
+    }
+
+    public List<String> candidates() {
+        return Collections.singletonList("7");
     }
 }

@@ -2,6 +2,7 @@ package com.kata.bankocr;
 
 import org.junit.jupiter.api.Test;
 
+import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -64,5 +65,10 @@ class UnitTest {
     @Test
     void should_recognize_others_as_question_mark() {
         assertThat(new Unit(singletonList("invalid-content")).result()).isEqualTo("?");
+    }
+
+    @Test
+    void should_resolve_candidates_correctly() {
+        assertThat(new Unit(Digits.ONE).candidates()).isEqualTo(singletonList("7"));
     }
 }
