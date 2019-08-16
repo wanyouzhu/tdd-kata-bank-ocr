@@ -3,19 +3,26 @@ package com.kata.bankocr;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 public class Entry {
     private static final int NUMBER_OF_UNITS_PER_ENTRY = 9;
     private static final int CHARS_PER_UNIT_LINE = 3;
+    private final List<Unit> units;
     private String result;
 
     public Entry(List<String> content) {
         checkContent(content);
-        this.result = recognize(content);
+        this.units = extractUnits(content);
+        this.result = recognize(units);
         checkResult();
+        recoverIfNeed();
+    }
+
+    private void recoverIfNeed() {
+        if (!hasError()) return;
     }
 
     private void checkResult() {
@@ -49,12 +56,12 @@ public class Entry {
         }
     }
 
-    private String recognize(List<String> content) {
-        return extractUnits(content).map(Unit::result).collect(joining());
+    private String recognize(List<Unit> units) {
+        return units.stream().map(Unit::result).collect(joining());
     }
 
-    private Stream<Unit> extractUnits(List<String> content) {
-        return IntStream.range(0, NUMBER_OF_UNITS_PER_ENTRY).mapToObj(i -> extractUnit(i, content));
+    private List<Unit> extractUnits(List<String> content) {
+        return IntStream.range(0, NUMBER_OF_UNITS_PER_ENTRY).mapToObj(i -> extractUnit(i, content)).collect(toList());
     }
 
     private Unit extractUnit(int unitIndex, List<String> content) {
