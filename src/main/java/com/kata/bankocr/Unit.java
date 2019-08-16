@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class Unit {
+    private final List<String> content;
     private final String result;
 
     public Unit(List<String> content) {
+        this.content = content;
         this.result = recognize(content);
     }
 
