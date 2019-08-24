@@ -68,6 +68,6 @@ class UnitTest {
 
     @Test
     void should_resolve_candidates_correctly() {
-        assertThat(new Unit(Digits.EIGHT).candidates()).isEqualTo(asList("0", "6", "9"));
+        assertThat(new Unit(Digits.EIGHT).candidates()).isEqualTo(asList("8", "0", "6", "9"));
     }
 }

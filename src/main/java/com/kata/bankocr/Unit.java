@@ -3,6 +3,7 @@ package com.kata.bankocr;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -47,7 +48,7 @@ public class Unit {
     }
 
     public List<String> candidates() {
-        return sensitiveIndices().mapToObj(this::resolveCandidate).filter(x -> !x.equals("?")).collect(toList());
+        return Stream.concat(Stream.of(result), sensitiveIndices().mapToObj(this::resolveCandidate)).filter(x -> !x.equals("?")).collect(toList());
     }
 
     private IntStream sensitiveIndices() {
