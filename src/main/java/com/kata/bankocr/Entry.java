@@ -28,8 +28,11 @@ public class Entry {
 
     private String recognize(List<Unit> units) {
         String recognized = recognizeFromUnits(units);
-        if (!recognized.contains("?") && isCorrect(recognized)) return recognized;
-        return recover(recognized, units);
+        return isCorrect(recognized) ? recognized : recover(recognized, units);
+    }
+
+    private boolean isCorrect(String recognized) {
+        return !recognized.contains("?") && isChecksumCorrect(recognized);
     }
 
     private IntStream unitIndices() {
@@ -42,7 +45,7 @@ public class Entry {
             StringBuilder unitsToTry = new StringBuilder(recognizeFromUnits(units));
             for (String candidate : units.get(i).candidates()) {
                 unitsToTry.setCharAt(i, candidate.charAt(0));
-                if (isCorrect(unitsToTry.toString())) {
+                if (isChecksumCorrect(unitsToTry.toString())) {
                     candidates.add(unitsToTry.toString());
                 }
             }
@@ -60,7 +63,7 @@ public class Entry {
         return recognized + " AMB [" + candidates.stream().map(x -> "'" + x + "'").collect(joining(", ")) + "]";
     }
 
-    private boolean isCorrect(String candidate) {
+    private boolean isChecksumCorrect(String candidate) {
         return unitIndices().map(i -> (NUMBER_OF_UNITS_PER_ENTRY - i) * (candidate.charAt(i) - '0')).sum() % 11 == 0;
     }
 
