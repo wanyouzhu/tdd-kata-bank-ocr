@@ -28,14 +28,10 @@ public class Entry {
 
     private String recognize(List<Unit> units) {
         String recognized = recognizeFromUnits(units);
-        if (recognized.contains("?") || calculateChecksum(recognized) != 0) {
+        if (recognized.contains("?") || !isCorrect(recognized)) {
             return recover(recognized, units);
         }
         return recognized;
-    }
-
-    private int calculateChecksum(String recognized) {
-        return unitIndices().map(i -> (NUMBER_OF_UNITS_PER_ENTRY - i) * (recognized.charAt(i) - '0')).sum() % 11;
     }
 
     private IntStream unitIndices() {
@@ -67,7 +63,7 @@ public class Entry {
     }
 
     private boolean isCorrect(String candidate) {
-        return IntStream.range(0, 9).map(i -> (9 - i) * (candidate.charAt(i) - '0')).sum() % 11 == 0;
+        return unitIndices().map(i -> (NUMBER_OF_UNITS_PER_ENTRY - i) * (candidate.charAt(i) - '0')).sum() % 11 == 0;
     }
 
     private String recognizeFromUnits(List<Unit> units) {
