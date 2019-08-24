@@ -28,10 +28,8 @@ public class Entry {
 
     private String recognize(List<Unit> units) {
         String recognized = recognizeFromUnits(units);
-        if (recognized.contains("?") || !isCorrect(recognized)) {
-            return recover(recognized, units);
-        }
-        return recognized;
+        if (!recognized.contains("?") && isCorrect(recognized)) return recognized;
+        return recover(recognized, units);
     }
 
     private IntStream unitIndices() {
