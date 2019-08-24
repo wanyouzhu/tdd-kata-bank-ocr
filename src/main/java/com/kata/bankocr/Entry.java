@@ -11,64 +11,15 @@ import static java.util.stream.Collectors.toList;
 public class Entry {
     private static final int NUMBER_OF_UNITS_PER_ENTRY = 9;
     private static final int CHARS_PER_UNIT_LINE = 3;
-    private final List<Unit> units;
     private String result;
 
     public Entry(List<String> content) {
         checkContent(content);
-        this.units = extractUnits(content);
-        this.result = recognize(units);
-        checkResult();
-        recoverIfNeed();
-    }
-
-    private void recoverIfNeed() {
-        if (!hasError()) return;
-        List<String> candidates = new ArrayList<>();
-        for (int i = 0; i < units.size(); ++i) {
-            StringBuilder unitsToTry = new StringBuilder(units.stream().map(Unit::result).collect(joining()));
-            for (String candidate : units.get(i).candidates()) {
-                unitsToTry.setCharAt(i, candidate.charAt(0));
-                if (isCorrect(unitsToTry.toString())) {
-                    candidates.add(unitsToTry.toString());
-                }
-            }
-        }
-        if (candidates.size() == 1) {
-            result = String.join(", ", candidates);
-        } else if (!candidates.isEmpty()) {
-            candidates.sort(String::compareTo);
-            result = result.substring(0, 9) + " AMB [" + candidates.stream().map(x -> "'" + x + "'").collect(joining(", ")) + "]";
-        }
+        this.result = recognize(extractUnits(content));
     }
 
     private boolean isCorrect(String candidate) {
         return IntStream.range(0, 9).map(i -> (9 - i) * (candidate.charAt(i) - '0')).sum() % 11 == 0;
-    }
-
-    private void checkResult() {
-        validateUnits();
-        validateChecksum();
-    }
-
-    private void validateUnits() {
-        if (result.chars().anyMatch(x -> x == '?')) {
-            result = result + " ILL";
-        }
-    }
-
-    private void validateChecksum() {
-        if (!hasError() && calculateChecksum() != 0) {
-            result = result + " ERR";
-        }
-    }
-
-    private boolean hasError() {
-        return result.length() != 9;
-    }
-
-    private int calculateChecksum() {
-        return unitIndices().map(i -> (NUMBER_OF_UNITS_PER_ENTRY - i) * (result.charAt(i) - '0')).sum() % 11;
     }
 
     private IntStream unitIndices() {
@@ -82,6 +33,42 @@ public class Entry {
     }
 
     private String recognize(List<Unit> units) {
+        String recognized = recognizeFromUnits(units);
+        if (recognized.contains("?") || calculateChecksum(recognized) != 0) {
+            return recover(recognized, units);
+        }
+        return recognized;
+    }
+
+    private int calculateChecksum(String recognized) {
+        return unitIndices().map(i -> (NUMBER_OF_UNITS_PER_ENTRY - i) * (recognized.charAt(i) - '0')).sum() % 11;
+    }
+
+    private String recover(String recognized, List<Unit> units) {
+        List<String> candidates = new ArrayList<>();
+        for (int i = 0; i < units.size(); ++i) {
+            StringBuilder unitsToTry = new StringBuilder(recognizeFromUnits(units));
+            for (String candidate : units.get(i).candidates()) {
+                unitsToTry.setCharAt(i, candidate.charAt(0));
+                if (isCorrect(unitsToTry.toString())) {
+                    candidates.add(unitsToTry.toString());
+                }
+            }
+        }
+
+        if (candidates.isEmpty()) {
+            return recognized + " " + (recognized.contains("?") ? "ILL" : "ERR");
+        }
+
+        if (candidates.size() == 1) {
+            return String.join(", ", candidates);
+        }
+
+        candidates.sort(String::compareTo);
+        return recognized + " AMB [" + candidates.stream().map(x -> "'" + x + "'").collect(joining(", ")) + "]";
+    }
+
+    private String recognizeFromUnits(List<Unit> units) {
         return units.stream().map(Unit::result).collect(joining());
     }
 
