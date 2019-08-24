@@ -14,7 +14,6 @@ public class Entry {
     private String result;
 
     public Entry(List<String> content) {
-        checkContent(content);
         this.result = recognize(extractUnits(content));
     }
 
@@ -24,12 +23,6 @@ public class Entry {
 
     private IntStream unitIndices() {
         return IntStream.range(0, NUMBER_OF_UNITS_PER_ENTRY);
-    }
-
-    private void checkContent(List<String> content) {
-        if (!content.stream().allMatch(x -> x.length() == CHARS_PER_UNIT_LINE * NUMBER_OF_UNITS_PER_ENTRY)) {
-            throw new MalformedEntryException();
-        }
     }
 
     private String recognize(List<Unit> units) {
@@ -73,7 +66,14 @@ public class Entry {
     }
 
     private List<Unit> extractUnits(List<String> content) {
+        checkContent(content);
         return unitIndices().mapToObj(i -> extractUnit(i, content)).collect(toList());
+    }
+
+    private void checkContent(List<String> content) {
+        if (!content.stream().allMatch(x -> x.length() == CHARS_PER_UNIT_LINE * NUMBER_OF_UNITS_PER_ENTRY)) {
+            throw new MalformedEntryException();
+        }
     }
 
     private Unit extractUnit(int unitIndex, List<String> content) {
