@@ -1,11 +1,8 @@
 package com.kata.bankocr;
 
-import com.google.common.collect.Sets;
-
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.joining;
@@ -27,10 +24,18 @@ public class Entry {
 
     private void recoverIfNeed() {
         if (!hasError()) return;
-        Set<List<String>> lists = Sets.cartesianProduct(units.stream().map(Unit::candidates).map(LinkedHashSet::new).collect(toList()));
-        List<String> collect = lists.stream().map(x -> String.join("", x)).filter(this::isCorrect).collect(toList());
-        if (!collect.isEmpty()) {
-            result = String.join(" ", collect);
+        List<String> candidates = new ArrayList<>();
+        for (int i = 0; i < units.size(); ++i) {
+            StringBuilder unitsToTry = new StringBuilder(units.stream().map(Unit::result).collect(joining()));
+            for (String candidate : units.get(i).candidates()) {
+                unitsToTry.setCharAt(i, candidate.charAt(0));
+                if (isCorrect(unitsToTry.toString())) {
+                    candidates.add(unitsToTry.toString());
+                }
+            }
+        }
+        if (!candidates.isEmpty()) {
+            result = String.join(" ", candidates);
         }
     }
 
