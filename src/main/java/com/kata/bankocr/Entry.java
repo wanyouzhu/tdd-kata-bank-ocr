@@ -68,7 +68,11 @@ public class Entry {
     }
 
     private int calculateChecksum() {
-        return IntStream.range(0, 9).map(i -> (9 - i) * (result.charAt(i) - '0')).sum() % 11;
+        return unitIndices().map(i -> (NUMBER_OF_UNITS_PER_ENTRY - i) * (result.charAt(i) - '0')).sum() % 11;
+    }
+
+    private IntStream unitIndices() {
+        return IntStream.range(0, NUMBER_OF_UNITS_PER_ENTRY);
     }
 
     private void checkContent(List<String> content) {
@@ -82,7 +86,7 @@ public class Entry {
     }
 
     private List<Unit> extractUnits(List<String> content) {
-        return IntStream.range(0, NUMBER_OF_UNITS_PER_ENTRY).mapToObj(i -> extractUnit(i, content)).collect(toList());
+        return unitIndices().mapToObj(i -> extractUnit(i, content)).collect(toList());
     }
 
     private Unit extractUnit(int unitIndex, List<String> content) {
