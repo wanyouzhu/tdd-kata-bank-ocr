@@ -34,8 +34,11 @@ public class Entry {
                 }
             }
         }
-        if (!candidates.isEmpty()) {
-            result = String.join(" ", candidates);
+        if (candidates.size() == 1) {
+            result = String.join(", ", candidates);
+        } else if (!candidates.isEmpty()) {
+            candidates.sort(String::compareTo);
+            result = result.substring(0, 9) + " AMB [" + candidates.stream().map(x -> "'" + x + "'").collect(joining(", ")) + "]";
         }
     }
 

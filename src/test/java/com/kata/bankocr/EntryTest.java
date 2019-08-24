@@ -39,6 +39,11 @@ class EntryTest {
         assertThat(new Entry(illegalContent()).result()).isEqualTo("69357641? ILL");
     }
 
+    @Test
+    void should_correct_single_segment_error() {
+        assertThat(new Entry(contentWithManyCandidates()).result()).isEqualTo("888888888 AMB ['888886888', '888888880', '888888988']");
+    }
+
     private List<String> entryContentOne() {
         return Arrays.asList(
             "    _  _     _  _  _  _  _ ",
@@ -80,6 +85,15 @@ class EntryTest {
             " _  _  _  _  _  _          ",
             "|_ |_| _||_   ||_ |_|  | _ ",
             "|_| _| _| _|  ||_|  |  |   ",
+            "                           "
+        );
+    }
+
+    private List<String> contentWithManyCandidates() {
+        return Arrays.asList(
+            " _  _  _  _  _  _  _  _  _ ",
+            "|_||_||_||_||_||_||_||_||_|",
+            "|_||_||_||_||_||_||_||_||_|",
             "                           "
         );
     }
