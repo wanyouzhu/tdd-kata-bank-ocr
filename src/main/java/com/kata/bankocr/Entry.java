@@ -17,12 +17,13 @@ public class Entry {
         this.result = recognize(extractUnits(content));
     }
 
-    private boolean isCorrect(String candidate) {
-        return IntStream.range(0, 9).map(i -> (9 - i) * (candidate.charAt(i) - '0')).sum() % 11 == 0;
+    private Unit extractUnit(int unitIndex, List<String> content) {
+        return new Unit(content.stream().map(x -> extractUnitLine(unitIndex, x)).collect(joining()));
     }
 
-    private IntStream unitIndices() {
-        return IntStream.range(0, NUMBER_OF_UNITS_PER_ENTRY);
+    private String extractUnitLine(int unitIndex, String entryLine) {
+        int unitStart = unitIndex * CHARS_PER_UNIT_LINE;
+        return entryLine.substring(unitStart, unitStart + CHARS_PER_UNIT_LINE);
     }
 
     private String recognize(List<Unit> units) {
@@ -35,6 +36,10 @@ public class Entry {
 
     private int calculateChecksum(String recognized) {
         return unitIndices().map(i -> (NUMBER_OF_UNITS_PER_ENTRY - i) * (recognized.charAt(i) - '0')).sum() % 11;
+    }
+
+    private IntStream unitIndices() {
+        return IntStream.range(0, NUMBER_OF_UNITS_PER_ENTRY);
     }
 
     private String recover(String recognized, List<Unit> units) {
@@ -61,6 +66,10 @@ public class Entry {
         return recognized + " AMB [" + candidates.stream().map(x -> "'" + x + "'").collect(joining(", ")) + "]";
     }
 
+    private boolean isCorrect(String candidate) {
+        return IntStream.range(0, 9).map(i -> (9 - i) * (candidate.charAt(i) - '0')).sum() % 11 == 0;
+    }
+
     private String recognizeFromUnits(List<Unit> units) {
         return units.stream().map(Unit::result).collect(joining());
     }
@@ -74,15 +83,6 @@ public class Entry {
         if (!content.stream().allMatch(x -> x.length() == CHARS_PER_UNIT_LINE * NUMBER_OF_UNITS_PER_ENTRY)) {
             throw new MalformedEntryException();
         }
-    }
-
-    private Unit extractUnit(int unitIndex, List<String> content) {
-        return new Unit(content.stream().map(x -> extractUnitLine(unitIndex, x)).collect(joining()));
-    }
-
-    private String extractUnitLine(int unitIndex, String entryLine) {
-        int unitStart = unitIndex * CHARS_PER_UNIT_LINE;
-        return entryLine.substring(unitStart, unitStart + CHARS_PER_UNIT_LINE);
     }
 
     public String result() {
