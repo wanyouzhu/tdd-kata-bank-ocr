@@ -37,6 +37,8 @@ public class EntryReader {
     }
 
     private Entry extractEntry(List<String> lines, int index) {
-        return new Entry(lines.subList(index * LINES_PER_ENTRY, index * LINES_PER_ENTRY + LINES_PER_ENTRY));
+        int entryStart = index * LINES_PER_ENTRY;
+        int entryEnd = entryStart + LINES_PER_ENTRY;
+        return new Entry(lines.subList(entryStart, entryEnd));
     }
 }
