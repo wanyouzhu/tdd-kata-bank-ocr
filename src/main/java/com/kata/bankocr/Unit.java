@@ -34,19 +34,6 @@ public class Unit {
         return "?";
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Unit unit = (Unit) o;
-        return result.equals(unit.result);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(result);
-    }
-
     public List<String> candidates() {
         return Stream.concat(Stream.of(result), sensitiveIndices().mapToObj(this::resolveCandidate)).filter(x -> !x.equals("?")).collect(toList());
     }
@@ -59,5 +46,18 @@ public class Unit {
         StringBuilder builder = new StringBuilder(content);
         builder.setCharAt(i, content.charAt(i) != Digits.EIGHT.charAt(i) ? Digits.EIGHT.charAt(i) : ' ');
         return recognize(builder.toString());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Unit unit = (Unit) o;
+        return result.equals(unit.result);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(result);
     }
 }

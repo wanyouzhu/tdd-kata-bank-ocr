@@ -14,12 +14,22 @@ public class Entry {
     private String result;
 
     public Entry(List<String> content) {
-        this.result = recognize(extractUnits(content));
+        this.result = recognize(extractCandidate(content));
     }
 
-    private String recognize(List<Unit> units) {
-        String recognized = recognizeFromUnits(units);
-        return isCorrect(recognized) ? recognized : recover(recognized, units);
+    private List<Unit> extractCandidate(List<String> content) {
+        requireValidContent(content);
+        return extractUnitsFromValidContent(content);
+    }
+
+    private void requireValidContent(List<String> content) {
+        if (!content.stream().allMatch(x -> x.length() == CHARS_PER_UNIT_LINE * NUMBER_OF_UNITS_PER_ENTRY)) {
+            throw new MalformedEntryException();
+        }
+    }
+
+    private List<Unit> extractUnitsFromValidContent(List<String> content) {
+        return unitIndices().mapToObj(i -> extractUnit(i, content)).collect(toList());
     }
 
     private Unit extractUnit(int unitIndex, List<String> content) {
@@ -29,6 +39,11 @@ public class Entry {
     private String extractUnitLine(int unitIndex, String entryLine) {
         int unitStart = unitIndex * CHARS_PER_UNIT_LINE;
         return entryLine.substring(unitStart, unitStart + CHARS_PER_UNIT_LINE);
+    }
+
+    private String recognize(List<Unit> units) {
+        String recognized = recognizeFromUnits(units);
+        return isCorrect(recognized) ? recognized : recover(recognized, units);
     }
 
     private boolean isCorrect(String recognized) {
@@ -50,7 +65,6 @@ public class Entry {
             return String.join(", ", candidates);
         }
 
-        candidates.sort(String::compareTo);
         return recognized + " AMB [" + candidates.stream().map(x -> "'" + x + "'").collect(joining(", ")) + "]";
     }
 
@@ -65,6 +79,7 @@ public class Entry {
                 }
             }
         }
+        candidates.sort(String::compareTo);
         return candidates;
     }
 
@@ -74,17 +89,6 @@ public class Entry {
 
     private String recognizeFromUnits(List<Unit> units) {
         return units.stream().map(Unit::result).collect(joining());
-    }
-
-    private List<Unit> extractUnits(List<String> content) {
-        checkContent(content);
-        return unitIndices().mapToObj(i -> extractUnit(i, content)).collect(toList());
-    }
-
-    private void checkContent(List<String> content) {
-        if (!content.stream().allMatch(x -> x.length() == CHARS_PER_UNIT_LINE * NUMBER_OF_UNITS_PER_ENTRY)) {
-            throw new MalformedEntryException();
-        }
     }
 
     public String result() {
