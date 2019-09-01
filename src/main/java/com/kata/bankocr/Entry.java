@@ -17,6 +17,11 @@ public class Entry {
         this.result = recognize(extractUnits(content));
     }
 
+    private String recognize(List<Unit> units) {
+        String recognized = recognizeFromUnits(units);
+        return isCorrect(recognized) ? recognized : recover(recognized, units);
+    }
+
     private Unit extractUnit(int unitIndex, List<String> content) {
         return new Unit(content.stream().map(x -> extractUnitLine(unitIndex, x)).collect(joining()));
     }
@@ -24,11 +29,6 @@ public class Entry {
     private String extractUnitLine(int unitIndex, String entryLine) {
         int unitStart = unitIndex * CHARS_PER_UNIT_LINE;
         return entryLine.substring(unitStart, unitStart + CHARS_PER_UNIT_LINE);
-    }
-
-    private String recognize(List<Unit> units) {
-        String recognized = recognizeFromUnits(units);
-        return isCorrect(recognized) ? recognized : recover(recognized, units);
     }
 
     private boolean isCorrect(String recognized) {
@@ -40,16 +40,7 @@ public class Entry {
     }
 
     private String recover(String recognized, List<Unit> units) {
-        List<String> candidates = new ArrayList<>();
-        for (int i = 0; i < units.size(); ++i) {
-            StringBuilder unitsToTry = new StringBuilder(recognizeFromUnits(units));
-            for (String candidate : units.get(i).candidates()) {
-                unitsToTry.setCharAt(i, candidate.charAt(0));
-                if (isChecksumCorrect(unitsToTry.toString())) {
-                    candidates.add(unitsToTry.toString());
-                }
-            }
-        }
+        List<String> candidates = getRecoveredCandidates(units);
 
         if (candidates.isEmpty()) {
             return recognized + " " + (recognized.contains("?") ? "ILL" : "ERR");
@@ -61,6 +52,20 @@ public class Entry {
 
         candidates.sort(String::compareTo);
         return recognized + " AMB [" + candidates.stream().map(x -> "'" + x + "'").collect(joining(", ")) + "]";
+    }
+
+    private List<String> getRecoveredCandidates(List<Unit> units) {
+        List<String> candidates = new ArrayList<>();
+        for (int i = 0; i < units.size(); ++i) {
+            StringBuilder unitsToTry = new StringBuilder(recognizeFromUnits(units));
+            for (String candidate : units.get(i).candidates()) {
+                unitsToTry.setCharAt(i, candidate.charAt(0));
+                if (isChecksumCorrect(unitsToTry.toString())) {
+                    candidates.add(unitsToTry.toString());
+                }
+            }
+        }
+        return candidates;
     }
 
     private boolean isChecksumCorrect(String candidate) {
